@@ -2,6 +2,12 @@ const express = require('express');
 const app = express();
 const port = 3000;
 
+const collectibles = [
+    { name: 'shiny ball', price: 5.95 },
+    { name: 'autographed picture of a dog', price: 10 },
+    { name: 'vintage 1970s yogurt SOLD AS-IS', price: 0.99 }
+  ];
+
 app.get('/', (req, res) => {
     res.send('Hello, World!');
 });
@@ -26,6 +32,17 @@ app.get('/roll/:number', (req, res) => {
     } else {
         const roll = Math.floor(Math.random() * (number + 1));
         res.send(`You rolled a ${roll}`);
+    }
+});
+
+app.get('/collectibles/:index', (req, res) => {
+    const index = parseInt(req.params.index, 10);
+
+    if (isNaN(index) || index < 0 || index >= collectibles.length) {
+        res.send(`This item is not yet in stock. Check back soon!`);
+    } else {
+        const item = collectibles[index];
+        res.send(`So, you want the ${item.name}? For ${item.price.toFixed(2)}, it can be yours!`);
     }
 });
 
