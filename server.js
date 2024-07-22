@@ -19,6 +19,16 @@ app.get('/greetings/:username', (req, res) => {
     res.send(randomGreeting);
 });
 
+app.get('/roll/:number', (req, res) => {
+    const number = parseInt(req.params.number, 10);
+    if (isNaN(number)) {
+        res.send('You must specify a number');
+    } else {
+        const roll = Math.floor(Math.random() * (number + 1));
+        res.send(`You rolled a ${roll}`);
+    }
+});
+
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
